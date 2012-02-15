@@ -1,0 +1,4 @@
+= Nugen Barcode Splitter for Illumina 
+
+This gem is designed to demultiplex reads produced by Illumina with Nugen (http://www.nugeninc.com/nugen/) barcodes. 
+
