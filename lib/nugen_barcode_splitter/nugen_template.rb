@@ -1,33 +1,43 @@
 require "erubis"
 
-class Nugen_Template
+class NugenTemplate
 
-  def initialize(fastq_multx)
-    context = {
-      :fastq_multx => fastq_multx
-    }
-
-    nugen_template =<<EOF
+  def initialize(fastq_multx, options)
+    @template =<<EOF
 
     #!/bin/bash
     #\$ -pe DJ 4
     #\$ -l h_vmem=6G
     #\$ -j y
-    #\$ -N fq.<%= @lane %>
-    #\$ -o <%= @lane %>/nugen_demultiplexing.log
+    #\$ -N fq.<%= @lane %>.<%= @number %>
+    #\$ -o <%= @lane_dir %>/nugen_demultiplexing.log
 
-    <%= @fastq_multx %> -B <%= @barcodes %> \\
+    #{fastq_multx} #{options} -B <%= @barcodes %> \\
       <%= @fwd %> <%= @rev %> \\
       -o <%= @r1 %>.%.fq <%= @r2 %>.%.fq
 
 EOF
-
-    eruby = Erubis::Eruby.new(nugen_template)
-    eruby.evalute(context)
   end
 
-  def fill_template(dirs)
+  def fill(lane, number, lane_dir, barcodes, fwd, rev)
 
+    context = {
+      :lane => lane,
+      :number => number,
+      :lane_dir => lane_dir,
+      :barcodes => barcodes,
+      :fwd => fwd,
+      :rev => rev,
+      :r1 => "R1_#{number}",
+      :r2 => "R2_#{number}"
+    }
+
+    eruby = Erubis::Eruby.new(@template)
+    eruby.evaluate(context)
+  end
+
+  def to_s
+    template = "#{@template.chomp()}"
   end
 
 end

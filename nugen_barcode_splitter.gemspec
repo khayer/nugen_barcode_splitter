@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "nugen_barcode_splitter/version"
+#require "nugen_barcode_splitter/version"
 
 Gem::Specification.new do |s|
   s.name        = "nugen_barcode_splitter"

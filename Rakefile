@@ -7,8 +7,11 @@
 #  t.verbose = true
 #end
 
-require "bundler/gem_tasks"
+#require "bundler/gem_tasks"
 require 'rake/testtask'
+
+`gem build nugen_barcode_splitter.gemspec`
+`gem install nugen_barcode_splitter-0.0.1.gem`
 
 Rake::TestTask.new do |t|
   t.libs << 'test'

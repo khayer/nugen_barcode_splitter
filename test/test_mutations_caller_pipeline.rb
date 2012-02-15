@@ -1,17 +1,17 @@
 require 'test/unit'
-require 'lib/nugen_barcode_splitter'
+require 'nugen_barcode_splitter'
 
 class NugenBarcodeSplitterTest < Test::Unit::TestCase
-  def test_friendly
-    assert_equal  "Hello World!", Friendly.hi()
-    #File.delete("haas")
+  def setup
+
   end
 
   def test_nugen_template
-    assert_equal "Hallo" , NugenTemplate.new("kaka")
-    #k = BwaCaller.call_paired_end("r1", "r2", "out_file", "index", "haas", "bwa", "samtools")
-    #assert(k)
-    #assert(File.exist?("haas"))
+    template = NugenTemplate.new("fastq-multx", "")
+    assert template.to_s.include?("fastq-multx")
+    assert template.to_s.include?("<%= @fwd %>")
+    temp = template.fill("Lane_3", "33", "~/Lane3/", "bc", "fwd", "rev")
+    assert_equal("\n    #!/bin/bash\n    \#$ -pe DJ 4\n    \#$ -l h_vmem=6G\n    \#$ -j y\n    \#$ -N fq.Lane_3.33\n    \#$ -o ~/Lane3//nugen_demultiplexing.log\n\n    fastq-multx  -B bc \\\n      fwd rev \\\n      -o R1_33.%.fq R2_33.%.fq\n\n","#{temp}")
   end
 
   def test_samtools_indexing
