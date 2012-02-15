@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+require "rubygems"
+require "erubis"
+require "yaml"
+require "optparse"
+
+usage =<<EOF
+      #{$0} [options] -p project_dir -o out_dir -c barcodes.txt
+_____________________________________________________________________________
+
+      Example barcodes.txt :
+
+        # Name Barcode
+        S1 AGAG
+        S2 TGCG
+        S3 CGCC
+        ...
+
+      Note: The names must be alphanumerical!
+_____________________________________________________________________________
+
+EOF
+
+options = {
+  :project_dir => nil,
+  :out_dir => nil,
+  :eol_only? => false,
+  :bel_only? => false,
+  :trim? => true,
+  :mismatches => 1,
+}
+
+
+qsubtemplate =<<EOF
+#!/bin/bash
+#\$ -pe DJ 4
+#\$ -l h_vmem=6G
+#\$ -j y
+#\$ -N fq.<%= @lane %>
+#\$ -o <%= @lane %>/nugen_demultiplexing.log
+

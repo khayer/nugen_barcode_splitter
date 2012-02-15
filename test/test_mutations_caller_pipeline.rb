@@ -1,14 +1,14 @@
 require 'test/unit'
-require 'nugen_barcode_splitter'
+require 'lib/nugen_barcode_splitter'
 
 class NugenBarcodeSplitterTest < Test::Unit::TestCase
-  def test_hi
-    puts "HAHA"
-    assert_equal  "Hello World!", NugenBarcodeSplitter.hi()
+  def test_friendly
+    assert_equal  "Hello World!", Friendly.hi()
     #File.delete("haas")
   end
 
-  def test_bwa_caller
+  def test_nugen_template
+    assert_equal "Hallo" , NugenTemplate.new("kaka")
     #k = BwaCaller.call_paired_end("r1", "r2", "out_file", "index", "haas", "bwa", "samtools")
     #assert(k)
     #assert(File.exist?("haas"))

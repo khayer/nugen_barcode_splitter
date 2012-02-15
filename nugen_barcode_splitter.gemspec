@@ -4,7 +4,9 @@ require "nugen_barcode_splitter/version"
 
 Gem::Specification.new do |s|
   s.name        = "nugen_barcode_splitter"
-  s.version     = NugenBarcodeSplitter::VERSION
+ # s.version     = NugenBarcodeSplitter::VERSION
+  s.version     = "0.0.1"
+  s.date        = "2012-02-15"
   s.authors     = ["Katharina Hayer"]
   s.email       = ["katharinaehayer@gmail.com"]
   s.homepage    = "https://github.com/khayer/nugen_barcode_splitter"
@@ -15,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "nugen_barcode_splitter"
 
-  s.files         = `git ls-files`.split("\n")
+  s.files         = `git ls-files -- {lib,bin}/*`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
