@@ -1,8 +1,8 @@
 require "nugen_barcode_splitter/version"
 
-module NugenBarcodeSplitter
+class NugenBarcodeSplitter
   # Your code goes here...
-  def hi
+  def self.hi
     "Hello Test!"
   end
 end
