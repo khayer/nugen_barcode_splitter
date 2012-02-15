@@ -1,5 +1,5 @@
 require 'test/unit'
-#require 'nugen_barcode_splitter'
+require 'nugen_barcode_splitter'
 
 class NugenBarcodeSplitterTest < Test::Unit::TestCase
   def test_hi
