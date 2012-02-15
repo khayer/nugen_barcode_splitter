@@ -1,0 +1,3 @@
+class Fastq
+
+end
