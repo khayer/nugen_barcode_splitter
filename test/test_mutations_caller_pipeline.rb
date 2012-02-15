@@ -14,8 +14,16 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     assert_equal("\n    #!/bin/bash\n    \#$ -pe DJ 4\n    \#$ -l h_vmem=6G\n    \#$ -j y\n    \#$ -N fq.Lane_3.33\n    \#$ -o ~/Lane3//nugen_demultiplexing.log\n\n    fastq-multx  -B bc \\\n      fwd rev \\\n      -o R1_33.%.fq R2_33.%.fq\n\n","#{temp}")
   end
 
-  def test_samtools_indexing
-
+  def test_fastq
+    fastq_file = "test/fixtures/invalid.fq"
+    assert_raise RuntimeError do
+      Fastq.new(fastq_file)
+    end
+    fastq_file = "test/fixtures/test.fq"
+    assert_nothing_raised do
+      fastq = Fastq.new(fastq_file)
+    end
+    fastq.add(number_of_bases, "test/fixtures/test_added_ns.fq")
   end
 
   def test_gatk_caller
