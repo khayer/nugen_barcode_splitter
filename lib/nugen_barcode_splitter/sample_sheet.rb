@@ -23,4 +23,19 @@ class SampleSheet
 
   attr_accessor :lanes, :sample_id, :barcodes
 
+  def create_barcode_txt(prefix)
+    current_lane = "dummy"
+    handler = File.new(prefix,'w')
+    @lanes.each_with_index do |lane, i|
+      if current_lane != lane
+        outfile = "#{prefix}_#{lane}.txt"
+        current_lane = lane
+        handler = File.new(outfile,'w')
+        handler.write("# SampleName Barcode \n")
+      end
+      handler.write("#{@sample_id[i]} #{@barcodes[i]} \n")
+    end
+    File.delete(prefix)
+  end
+
 end

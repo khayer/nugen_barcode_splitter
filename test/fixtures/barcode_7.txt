@@ -1,0 +1,5 @@
+# SampleName Barcode 
+RX7 AGGG 
+RX8 GTCA 
+RX7X2 CCAT 
+RX8X2 TATC 

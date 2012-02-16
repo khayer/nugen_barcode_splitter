@@ -40,6 +40,9 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     samplesheet = SampleSheet.new("test/fixtures/sample_sheet.csv")
     assert_equal(samplesheet.barcodes[3], "TTAG")
     assert_equal(samplesheet.sample_id[4], "RX3")
+
+    samplesheet.create_barcode_txt("test/fixtures/barcode")
+
   end
 
   def test_xxx
