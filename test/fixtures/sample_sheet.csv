@@ -1,0 +1,21 @@
+FCID,Lane,SampleID,SampleRef,Index,Description,Control,Recipe,Operator,SampleProject,
+C0ED3ACXX,4,R-1,hg19,ACCC,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,4,R-2,hg19,GAGT,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,4,R-1-2,hg19,CGTA,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,4,R-2-2,hg19,TTAG,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,5,R-3,hg19,AGGG,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,5,R-4,hg19,GTCA,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,5,R-3-2,hg19,CCAT,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,5,R-4-2,hg19,TATC,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,6,R-5,hg19,ACCC,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,6,R-6,hg19,GAGT,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,6,R-5-2,hg19,CGTA,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,6,R-6-2,hg19,TTAG,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,7,R-7,hg19,AGGG,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,7,R-8,hg19,GTCA,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,7,R-7-2,hg19,CCAT,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,7,R-8-2,hg19,TATC,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,8,R-9,hg19,ACCC,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,8,R-10,hg19,GAGT,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,8,R-9-2,hg19,CGTA,RNA Seq,N,,,47644,Nugen barcodes
+C0ED3ACXX,8,R-10-2,hg19,TTAG,RNA Seq,N,,,47644,Nugen barcodes

@@ -27,9 +27,9 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     fastq.add(4, "test/fixtures/test_added_ns.fq")
   end
 
-  def test_gatk_caller
-    #k = GatkCaller.call("haas", "~/Documents/GATK/dist/GenomeAnalysisTK.jar", "jsjs", "baba", "saa")
-    #assert(!k)
+  def test_samplesheet
+    samplesheet = SampleSheet.new("test/fixtures/sample_sheet.csv")
+    assert_equal(samplesheet.barcodes[3], "TTAG")
   end
 
   def test_create_location_file

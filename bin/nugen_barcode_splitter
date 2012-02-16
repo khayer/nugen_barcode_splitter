@@ -4,23 +4,21 @@ require "yaml"
 require "optparse"
 
 usage =<<EOF
-      #{$0} [options] -p project_dir -o out_dir -c barcodes.txt
+      #{$0} [options] -p project_dir -o out_dir -c sample_sheet_nugen
 _____________________________________________________________________________
 
-      Example barcodes.txt :
+      Example sample_sheet_nugen.csv :
 
-        LANE:1
-        # Name Barcode
-        S1 AGAG
-        S2 TGCG
-        S3 CGCC
-        LANE:2
-        # Name Barcode
-        S5 TAGAG
-        S6 CTGCG
-        S7 CCGCC
+FCID,Lane,SampleID,SampleRef,Index,Description,Control,Recipe,Operator,SampleProject
+C0ED3ACXX,4,S1,hg19,ACCC,RNA Seq,N,,,33333
+C0ED3ACXX,4,S2,hg19,GAGT,RNA Seq,N,,,44444
+C0ED3ACXX,4,S3,hg19,CGTA,RNA Seq,N,,,33333
+C0ED3ACXX,4,S4,hg19,TTAG,RNA Seq,N,,,44444
+C0ED3ACXX,5,S5,hg19,AGGG,RNA Seq,N,,,33333
+C0ED3ACXX,5,S6,hg19,GTCA,RNA Seq,N,,,44444
+C0ED3ACXX,6,S7,hg19,CCAT,RNA Seq,N,,,33333
 
-      Note: The names must be alphanumerical!
+      Note: The sample names must be alphanumerical!
 _____________________________________________________________________________
 
 EOF
@@ -28,7 +26,7 @@ EOF
 options = {
   :project_dir => nil,
   :out_dir => nil,
-  :barcode => nil,
+  :sample_sheet => nil,
   :eol_only? => false,
   :bel_only? => false,
   :mismatches => 1,
@@ -48,9 +46,9 @@ optparse = OptionParser.new do |opts|
     options[:out_dir] = i if i
   end
 
-  opts.on("-c","--barCode", :REQUIRED, String,
-    "Please provide your barcode.txt file") do |i|
-    options[:barcode] = i if i
+  opts.on("-s","--sample_sheet", :REQUIRED, String,
+    "Please provide your sample_sheet") do |i|
+    options[:sample_sheet] = i if i
   end
 
   opts.on("-e","--end_of_line",
@@ -95,3 +93,6 @@ end
 
 STDERR.puts "CURRENT OPTIONS:"
 STDERR.puts options.to_yaml
+
+# Read out sample_sheet
+sample_sheet = SampleSheet.new(options[:sample_sheet])
