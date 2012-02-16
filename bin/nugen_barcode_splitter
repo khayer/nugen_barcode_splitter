@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require "rubygems"
-require "erubis"
 require "yaml"
 require "optparse"
 
@@ -10,11 +9,16 @@ _____________________________________________________________________________
 
       Example barcodes.txt :
 
+        LANE:1
         # Name Barcode
         S1 AGAG
         S2 TGCG
         S3 CGCC
-        ...
+        LANE:2
+        # Name Barcode
+        S5 TAGAG
+        S6 CTGCG
+        S7 CCGCC
 
       Note: The names must be alphanumerical!
 _____________________________________________________________________________
@@ -24,18 +28,70 @@ EOF
 options = {
   :project_dir => nil,
   :out_dir => nil,
+  :barcode => nil,
   :eol_only? => false,
   :bel_only? => false,
-  :trim? => true,
   :mismatches => 1,
+  :keep_barcode => false
 }
 
+optparse = OptionParser.new do |opts|
+  opts.banner = usage
 
-qsubtemplate =<<EOF
-#!/bin/bash
-#\$ -pe DJ 4
-#\$ -l h_vmem=6G
-#\$ -j y
-#\$ -N fq.<%= @lane %>
-#\$ -o <%= @lane %>/nugen_demultiplexing.log
+  opts.on("-p", "--project_dir", :REQUIRED, String,
+    "Illumina project directory (../Unaligned/ProjectXXX/)") do |i|
+    options[:project_dir] = i if i
+  end
 
+  opts.on("-o", "--out_dir", :REQUIRED, String,
+    "The desired output directory") do |i|
+    options[:out_dir] = i if i
+  end
+
+  opts.on("-c","--barCode", :REQUIRED, String,
+    "Please provide your barcode.txt file") do |i|
+    options[:barcode] = i if i
+  end
+
+  opts.on("-e","--end_of_line",
+    "Limit the search for the barcode to the end of the line DEFAULT:false") do |i|
+    options[:eol_only?] = true
+  end
+
+  opts.on("-b","--begin_of_line",
+    "Limit the search for the barcode to the start of the line DEFAULT:false") do |i|
+    options[:bol_only?] = true
+  end
+
+  opts.on("-k","--keep_barcode",
+    "Do not trim of the barcode DEFAULT:false") do |i|
+    options[:keep_barcode] = false
+  end
+
+  opts.on("-m","--mismatches NUM", Integer) do |i|
+    options[:mismatches] = i if i
+  end
+
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+end
+
+begin
+  optparse.parse!
+  mandatory = [:project_dir, :out_dir, :barcode]
+  missing = mandatory.select{ |param| options[param].nil? }
+  if !missing.empty?
+    puts "\nMissing options given or missing in config_file: \n\t#{missing.join(",\n\t")}"
+    puts optparse
+    exit
+  end
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+   puts $!.to_s
+   puts optparse
+   exit
+end
+
+STDERR.puts "CURRENT OPTIONS:"
+STDERR.puts options.to_yaml
