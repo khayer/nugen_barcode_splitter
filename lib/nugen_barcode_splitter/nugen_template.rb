@@ -15,9 +15,6 @@ class NugenTemplate
     #{fastq_multx} #{options} -B <%= @barcodes %> \\
       <%= @fwd %> <%= @rev %> \\
       -o <%= @r1 %>.%.fq <%= @r2 %>.%.fq
-
-
-
 EOF
   end
 

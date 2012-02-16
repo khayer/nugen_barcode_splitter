@@ -17,3 +17,6 @@ out_dir = ARGV[2]
 
 fastq = Fastq.new("file_dir")
 fastq.add(number_of_bases, out_dir)
+fastq.close
+
+

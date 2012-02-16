@@ -17,5 +17,10 @@ class Fastq
       outfile.write(@filehandle.readline)
       outfile.write("#{qualities}" + @filehandle.readline)
     end
+    outfile.close()
+  end
+
+  def close()
+    @filehandle.close()
   end
 end
