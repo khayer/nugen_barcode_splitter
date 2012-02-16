@@ -8,7 +8,9 @@ class Fastq
 
   def add(num, outdir)
     bases = "N" * num
+    qualities = "@" * num
     outfile = File.open(outdir, 'w')
+
     while !@filehandle.eof?
       outfile.write(@filehandle.readline)
       outfile.write("#{bases}" + @filehandle.readline)

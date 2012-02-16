@@ -23,7 +23,8 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     assert_nothing_raised do
       fastq = Fastq.new(fastq_file)
     end
-    fastq.add(number_of_bases, "test/fixtures/test_added_ns.fq")
+    fastq = Fastq.new(fastq_file)
+    fastq.add(4, "test/fixtures/test_added_ns.fq")
   end
 
   def test_gatk_caller
