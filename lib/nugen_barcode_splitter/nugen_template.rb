@@ -16,6 +16,8 @@ class NugenTemplate
       <%= @fwd %> <%= @rev %> \\
       -o <%= @r1 %>.%.fq <%= @r2 %>.%.fq
 
+
+
 EOF
   end
 
