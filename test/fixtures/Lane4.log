@@ -1,0 +1,56 @@
+Id	Count	File(s)
+R1	1063349	nugen/R1_001.R1.fq	nugen/R2_001.R1.fq
+R2	1002895	nugen/R1_001.R2.fq	nugen/R2_001.R2.fq
+R12	809924	nugen/R1_001.R12.fq	nugen/R2_001.R12.fq
+R22	933773	nugen/R1_001.R22.fq	nugen/R2_001.R22.fq
+unmatched	180059	nugen/R1_001.unmatched.fq	nugen/R2_001.unmatched.fq
+total	3990000
+Id	Count	File(s)
+R1	1046860	nugen/R1_002.R1.fq	nugen/R2_002.R1.fq
+R2	996545	nugen/R1_002.R2.fq	nugen/R2_002.R2.fq
+R12	807472	nugen/R1_002.R12.fq	nugen/R2_002.R12.fq
+R22	831454	nugen/R1_002.R22.fq	nugen/R2_002.R22.fq
+unmatched	307669	nugen/R1_002.unmatched.fq	nugen/R2_002.unmatched.fq
+total	3990000
+Id	Count	File(s)
+R1	1086329	nugen/R1_003.R1.fq	nugen/R2_003.R1.fq
+R2	951836	nugen/R1_003.R2.fq	nugen/R2_003.R2.fq
+R12	836954	nugen/R1_003.R12.fq	nugen/R2_003.R12.fq
+R22	895243	nugen/R1_003.R22.fq	nugen/R2_003.R22.fq
+unmatched	219638	nugen/R1_003.unmatched.fq	nugen/R2_003.unmatched.fq
+total	3990000
+Id	Count	File(s)
+R1	1083328	nugen/R1_004.R1.fq	nugen/R2_004.R1.fq
+R2	976776	nugen/R1_004.R2.fq	nugen/R2_004.R2.fq
+R12	827858	nugen/R1_004.R12.fq	nugen/R2_004.R12.fq
+R22	974454	nugen/R1_004.R22.fq	nugen/R2_004.R22.fq
+unmatched	127584	nugen/R1_004.unmatched.fq	nugen/R2_004.unmatched.fq
+total	3990000
+Id	Count	File(s)
+R1	1096656	nugen/R1_005.R1.fq	nugen/R2_005.R1.fq
+R2	867273	nugen/R1_005.R2.fq	nugen/R2_005.R2.fq
+R12	849238	nugen/R1_005.R12.fq	nugen/R2_005.R12.fq
+R22	858169	nugen/R1_005.R22.fq	nugen/R2_005.R22.fq
+unmatched	318664	nugen/R1_005.unmatched.fq	nugen/R2_005.unmatched.fq
+total	3990000
+Id	Count	File(s)
+R1	963137	nugen/R1_006.R1.fq	nugen/R2_006.R1.fq
+R2	738468	nugen/R1_006.R2.fq	nugen/R2_006.R2.fq
+R12	751315	nugen/R1_006.R12.fq	nugen/R2_006.R12.fq
+R22	817436	nugen/R1_006.R22.fq	nugen/R2_006.R22.fq
+unmatched	719644	nugen/R1_006.unmatched.fq	nugen/R2_006.unmatched.fq
+total	3990000
+Id	Count	File(s)
+R1	1037730	nugen/R1_007.R1.fq	nugen/R2_007.R1.fq
+R2	774785	nugen/R1_007.R2.fq	nugen/R2_007.R2.fq
+R12	800517	nugen/R1_007.R12.fq	nugen/R2_007.R12.fq
+R22	793770	nugen/R1_007.R22.fq	nugen/R2_007.R22.fq
+unmatched	583198	nugen/R1_007.unmatched.fq	nugen/R2_007.unmatched.fq
+total	3990000
+Id	Count	File(s)
+R1	1156538	nugen/R1_008.R1.fq	nugen/R2_008.R1.fq
+R2	919772	nugen/R1_008.R2.fq	nugen/R2_008.R2.fq
+R12	875997	nugen/R1_008.R12.fq	nugen/R2_008.R12.fq
+R22	879468	nugen/R1_008.R22.fq	nugen/R2_008.R22.fq
+unmatched	158225	nugen/R1_008.unmatched.fq	nugen/R2_008.unmatched.fq
+total	3990000

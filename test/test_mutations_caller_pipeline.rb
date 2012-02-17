@@ -45,7 +45,12 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
 
   end
 
-  def test_xxx
-
+  def test_statistics
+    log_file = "test/fixtures/Lane4.log"
+    stats = Statistics.new(log_file, ["R1", "R2", "R12", "R22"])
+    assert_equal(stats.total, 31920000)
+    assert_equal(stats.num_reads[0], 8533927)
+    assert_equal(stats.num_unmatched, 2614681)
+    puts stats.to_s
   end
 end
