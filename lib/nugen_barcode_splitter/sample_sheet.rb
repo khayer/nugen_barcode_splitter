@@ -21,7 +21,7 @@ class SampleSheet
     end
   end
 
-  attr_accessor :lanes, :sample_id, :barcodes
+  attr_accessor :lanes, :sample_id, :barcodes, :barcode_lengths
 
   def create_barcode_txt(prefix)
     current_lane = "dummy"

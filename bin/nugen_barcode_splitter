@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
-require "rubygems"
 require "yaml"
 require "optparse"
+require "nugen_barcode_splitter"
+require "fileutils"
 
 usage =<<EOF
       #{$0} [options] -p project_dir -o out_dir -c sample_sheet_nugen
@@ -27,10 +28,12 @@ options = {
   :project_dir => nil,
   :out_dir => nil,
   :sample_sheet => nil,
-  :eol_only? => false,
-  :bel_only? => false,
-  :mismatches => 1,
-  :keep_barcode => false
+  :eol_only? => "",
+  :bel_only? => "",
+  :mismatches => "",
+  :keep_barcode => "",
+  :fastq_multx => "fastq_multx",
+  :debug => false
 }
 
 optparse = OptionParser.new do |opts|
@@ -53,21 +56,29 @@ optparse = OptionParser.new do |opts|
 
   opts.on("-e","--end_of_line",
     "Limit the search for the barcode to the end of the line DEFAULT:false") do |i|
-    options[:eol_only?] = true
+    options[:eol_only?] = "-e"
   end
 
   opts.on("-b","--begin_of_line",
     "Limit the search for the barcode to the start of the line DEFAULT:false") do |i|
-    options[:bol_only?] = true
+    options[:bol_only?] = "-b"
   end
 
   opts.on("-k","--keep_barcode",
     "Do not trim of the barcode DEFAULT:false") do |i|
-    options[:keep_barcode] = false
+    options[:keep_barcode] = "-x"
   end
 
-  opts.on("-m","--mismatches NUM", Integer) do |i|
-    options[:mismatches] = i if i
+  opts.on("-m","--mismatches NUM", Integer, "Number of mismatches (Default:1)") do |i|
+    options[:mismatches] = "-m #{i}" if i
+  end
+
+  opts.on("-x", "--fastq_multx DIR", String) do |i|
+    options[:fastq_multx] = i if i
+  end
+
+  opts.on("-d", "--debug", "Debug mode!") do |i|
+    options[:debug] = true
   end
 
   opts.on_tail("-h", "--help", "Show this message") do
@@ -78,7 +89,7 @@ end
 
 begin
   optparse.parse!
-  mandatory = [:project_dir, :out_dir, :barcode]
+  mandatory = [:project_dir, :out_dir, :sample_sheet]
   missing = mandatory.select{ |param| options[param].nil? }
   if !missing.empty?
     puts "\nMissing options given or missing in config_file: \n\t#{missing.join(",\n\t")}"
@@ -96,3 +107,58 @@ STDERR.puts options.to_yaml
 
 # Read out sample_sheet
 sample_sheet = SampleSheet.new(options[:sample_sheet])
+sample_sheet.create_barcode_txt("#{options[:out_dir]}/barcode")
+
+# Prepare template
+multx_opts = "#{options[:keep_barcode]} #{options[:eol_only]} #{options[:bol_only]} #{options[:mismatches]}"
+nugen_temp = NugenTemplate.new(options[:fastq_multx],multx_opts)
+
+Dir.glob(options[:project_dir]+"/*").each do |p|
+  next unless File.directory? p
+  next unless p =~ /Sample_Lane/
+  outdir = ""
+  lane = ""
+  Dir.glob(p+"/*").each do |fwd|
+    next if File.directory? fwd
+    next unless fwd =~ /Lane[1-8]_NoIndex_L[0-9]{3}_R1_[0-9]{3}.fastq.gz/
+    rev = fwd.gsub(/_R1_/, "_R2_")
+    tmp = fwd.split("/")
+    tmp = tmp[-1].split("_")
+    lane = tmp[0].gsub(/\D/,"")
+    number = tmp[4].gsub(/\D/,"")
+    barcodes = "#{options[:out_dir]}/barcode_#{lane}.txt"
+    outdir = options[:out_dir] + "Lane#{lane}"
+    begin
+      FileUtils.mkdir_p outdir unless File.directory? outdir
+    rescue Exception => e
+      STDERR.puts e.message
+    end
+    cmd = nugen_temp.fill(lane,number,outdir, barcodes, fwd, rev)
+    if options[:debug]
+      STDERR.puts cmd if options[:debug]
+    else
+      status = system(cmd)
+      raise "Calling the template did not succeed!" if !status
+    end
+  end
+
+  # Add the trimmed bases
+  Dir.glob(outdir+"/*").each do |fwd|
+    if fwd =~ /nugen_demultiplexing.log/
+      sample_sheet.lanes
+      statistics = Statistics.new(fwd, )
+    end
+    next unless fwd =~ /R1_[0-9]{3}./
+    cmd = "base_adder #{fwd} 4 #{fwd}_added"
+    if options[:debug]
+      STDERR.puts cmd if options[:debug]
+    else
+      status = system(cmd)
+      raise "Calling the template did not succeed!" if !status
+      cmd = "mv #{fwd}_added #{fwd}"
+      status = system(cmd)
+      raise "Was not ablde to rename file #{fwd}!" if status!=true
+    end
+  end
+
+end

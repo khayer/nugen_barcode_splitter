@@ -11,7 +11,7 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     assert template.to_s.include?("fastq-multx")
     assert template.to_s.include?("<%= @fwd %>")
     temp = template.fill("Lane_3", "33", "~/Lane3/", "bc", "fwd", "rev")
-    assert_equal(temp.to_s, "\n    #!/bin/bash\n    \#$ -pe DJ 4\n    \#$ -l h_vmem=6G\n    \#$ -j y\n    \#$ -N fq.Lane_3.33\n    \#$ -o ~/Lane3//nugen_demultiplexing.log\n\n    fastq-multx  -B bc \\\n      fwd rev \\\n      -o R1_33.%.fq R2_33.%.fq\n")
+    assert_equal(temp.to_s, "\n    #!/bin/bash\n    \#$ -pe DJ 4\n    \#$ -l h_vmem=6G\n    \#$ -j y\n    \#$ -N fq.LaneLane_3.33\n    \#$ -o ~/Lane3//nugen_demultiplexing.log\n\n    fastq-multx  -B bc \\\n      <(gunzip -c fwd) <(gunzip -c rev) \\\n      -o ~/Lane3//R1_33.%.fq ~/Lane3//R2_33.%.fq \\\n      >> ~/Lane3//nugen_demultiplexing.log\n")
   end
 
   def test_fastq
@@ -51,6 +51,5 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     assert_equal(stats.total, 31920000)
     assert_equal(stats.num_reads[0], 8533927)
     assert_equal(stats.num_unmatched, 2614681)
-    puts stats.to_s
   end
 end
