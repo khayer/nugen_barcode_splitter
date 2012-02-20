@@ -54,7 +54,7 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
   end
 
   def test_MyOperations
-    sample_ids = MyOperations.merge("fwd","rev","outdir", "number", "test/fixtures/barcode_5.txt")
-    assert_equal(sample_ids, ["ATG"])
+    merger = Merger.new("fwd","rev","outdir", "number", "test/fixtures/barcode_5.txt")
+    assert_equal(merger.sample_ids, ["RX3", "RX4", "RX3X2", "RX4X2"])
   end
 end
