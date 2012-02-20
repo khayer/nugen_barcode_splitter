@@ -1,7 +1,7 @@
 require 'rake/testtask'
-
+`rm nugen_barcode_splitter-*.gem`
 `gem build nugen_barcode_splitter.gemspec`
-`gem install nugen_barcode_splitter-0.0.1.gem`
+`gem install nugen_barcode_splitter-*.gem`
 
 Rake::TestTask.new do |t|
   t.libs << 'test'

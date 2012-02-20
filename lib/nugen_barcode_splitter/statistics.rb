@@ -1,6 +1,18 @@
 class Statistics
 
-  def initialize(lane_log, barcodes)
+  def initialize(lane_log)
+    # getting barcodes:
+    i = 0
+    @barcodes = []
+    File.open(lane_log).each do |line|
+      next if line.include?("Id")
+      next if line.empty?
+      break if line.include?("unmatched")
+      line = line.split("\t")
+      barcodes[i] = line[0]
+      i += 1
+    end
+
     @num_reads = Array.new(barcodes.length(),0)
     @num_unmatched = 0
     @total = 0

@@ -35,6 +35,7 @@ class SampleSheet
       end
       handler.write("#{@sample_id[i]} #{@barcodes[i]} \n")
     end
+    handler.close()
     File.delete(prefix)
   end
 

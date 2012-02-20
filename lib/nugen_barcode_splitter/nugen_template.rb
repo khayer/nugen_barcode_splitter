@@ -4,18 +4,11 @@ class NugenTemplate
 
   def initialize(fastq_multx, options)
     @template =<<EOF
-
-    #!/bin/bash
-    #\$ -pe DJ 4
-    #\$ -l h_vmem=6G
-    #\$ -j y
-    #\$ -N fq.Lane<%= @lane %>.<%= @number %>
-    #\$ -o <%= @lane_dir %>/nugen_demultiplexing.log
-
-    #{fastq_multx} #{options} -B <%= @barcodes %> \\
-      <(gunzip -c <%= @fwd %>) <(gunzip -c <%= @rev %>) \\
-      -o <%= @lane_dir %>/<%= @r1 %>.%.fq <%= @lane_dir %>/<%= @r2 %>.%.fq \\
-      >> <%= @lane_dir %>/nugen_demultiplexing.log
+#{fastq_multx} #{options} <%= @barcodes %> \\
+  <(gunzip -c <%= @fwd %>) \\
+  <(gunzip -c <%= @rev %>) \\
+  -o <%= @lane_dir %>/<%= @r1 %>.%.fq <%= @lane_dir %>/<%= @r2 %>.%.fq \\
+  >> <%= @lane_dir %>/nugen_demultiplexing.log
 EOF
   end
 
