@@ -134,13 +134,23 @@ Dir.glob(options[:project_dir]+"/*").each do |p|
     rescue Exception => e
       STDERR.puts e.message
     end
-    cmd = nugen_temp.fill(lane,number,outdir, barcodes, fwd, rev)
+    # Fwd_read
+    cmd = nugen_temp.fill(lane,number,outdir, barcodes, fwd, true)
     if options[:debug]
       STDERR.puts cmd if options[:debug]
     else
       status = system('bash', '-c', cmd)
-      raise "Calling the template did not succeed!" if !status
+      raise "Calling the template for fwd did not succeed!" if !status
     end
+    cmd = nugen_temp.fill(lane,number,outdir, barcodes, rev, false)
+    if options[:debug]
+      STDERR.puts cmd if options[:debug]
+    else
+      status = system('bash', '-c', cmd)
+      raise "Calling the template for rev did not succeed!" if !status
+    end
+    # Merging
+    MyOperations.merge(fwd,rev,outdir,number,barcodes)
   end
 
   # Add the trimmed bases
@@ -148,6 +158,10 @@ Dir.glob(options[:project_dir]+"/*").each do |p|
     if fwd =~ /nugen_demultiplexing.log/
       sample_sheet.lanes
       statistics = Statistics.new(fwd)
+      stats_out = outdir + "/statistics"
+      stats_handler = File.new(stats_out,'w')
+      stats_handler.write(statistics.to_s)
+      stats_handler.close()
     end
     next unless fwd =~ /R1_[0-9]{3}./
     cmd = "base_adder #{fwd} 4 #{fwd}_added"
@@ -155,7 +169,7 @@ Dir.glob(options[:project_dir]+"/*").each do |p|
       STDERR.puts cmd if options[:debug]
     else
       status = system(cmd)
-      raise "Calling the template did not succeed!" if !status
+      raise "Calling base_adder did not succeed!" if !status
       cmd = "mv #{fwd}_added #{fwd}"
       status = system(cmd)
       raise "Was not able to rename file #{fwd}!" if status!=true

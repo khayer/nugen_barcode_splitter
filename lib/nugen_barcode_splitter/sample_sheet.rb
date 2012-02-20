@@ -30,6 +30,7 @@ class SampleSheet
       if current_lane != lane
         outfile = "#{prefix}_#{lane}.txt"
         current_lane = lane
+        handler.close()
         handler = File.new(outfile,'w')
         handler.write("# SampleName Barcode \n")
       end

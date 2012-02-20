@@ -9,9 +9,9 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
   def test_nugen_template
     template = NugenTemplate.new("fastq-multx", "")
     assert template.to_s.include?("fastq-multx")
-    assert template.to_s.include?("<%= @fwd %>")
-    temp = template.fill("Lane_3", "33", "~/Lane3/", "bc", "fwd", "rev")
-    assert_equal(temp.to_s, "fastq-multx  bc \\\n  <(gunzip -c fwd) \\\n  <(gunzip -c rev) \\\n  -o ~/Lane3//R1_33.%.fq ~/Lane3//R2_33.%.fq \\\n  >> ~/Lane3//nugen_demultiplexing.log\n")
+    assert template.to_s.include?("<%= @read %>")
+    temp = template.fill("Lane_3", "33", "~/Lane3/", "bc", "fwd", true)
+    assert_equal(temp.to_s, "fastq-multx   bc \\\n  <(gunzip -c fwd) \\\n  -o ~/Lane3//R1_33.%.fq  \\\n  >> ~/Lane3//nugen_demultiplexing.log\n")
   end
 
   def test_fastq
@@ -51,5 +51,10 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     assert_equal(stats.total, 31920000)
     assert_equal(stats.num_reads[0], 8533927)
     assert_equal(stats.num_unmatched, 2614681)
+  end
+
+  def test_MyOperations
+    sample_ids = MyOperations.merge("fwd","rev","outdir", "number", "test/fixtures/barcode_5.txt")
+    assert_equal(sample_ids, ["ATG"])
   end
 end
