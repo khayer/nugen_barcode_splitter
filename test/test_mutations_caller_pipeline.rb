@@ -53,8 +53,12 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     assert_equal(stats.num_unmatched, 2614681)
   end
 
-  def test_MyOperations
-    merger = Merger.new("fwd","rev","outdir", "number", "test/fixtures/barcode_5.txt")
+  def test_merger
+    merger = Merger.new("test/fixtures/Sample_Lane5/Lane5_NoIndex_L005_R1_001.fastq.gz",
+      "test/fixtures/Sample_Lane5/Lane5_NoIndex_L005_R2_001.fastq.gz",
+      "test/fixtures/Sample_Lane5", "001", "test/fixtures/barcode_5.txt")
     assert_equal(merger.sample_ids, ["RX3", "RX4", "RX3X2", "RX4X2"])
+    #merger.merge
+    #assert.equal(merger.values_fwd[1].value_at(),{"sfggf"=>"dffg"})
   end
 end

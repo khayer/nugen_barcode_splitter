@@ -150,30 +150,31 @@ Dir.glob(options[:project_dir]+"/*").each do |p|
       raise "Calling the template for rev did not succeed!" if !status
     end
     # Merging
-    MyOperations.merge(fwd,rev,outdir,number,barcodes)
+    merger = Merger.new(fwd,rev,outdir,number,barcodes)
+    merger.merge()
   end
 
   # Add the trimmed bases
-  Dir.glob(outdir+"/*").each do |fwd|
-    if fwd =~ /nugen_demultiplexing.log/
-      sample_sheet.lanes
-      statistics = Statistics.new(fwd)
-      stats_out = outdir + "/statistics"
-      stats_handler = File.new(stats_out,'w')
-      stats_handler.write(statistics.to_s)
-      stats_handler.close()
-    end
-    next unless fwd =~ /R1_[0-9]{3}./
-    cmd = "base_adder #{fwd} 4 #{fwd}_added"
-    if options[:debug]
-      STDERR.puts cmd if options[:debug]
-    else
-      status = system(cmd)
-      raise "Calling base_adder did not succeed!" if !status
-      cmd = "mv #{fwd}_added #{fwd}"
-      status = system(cmd)
-      raise "Was not able to rename file #{fwd}!" if status!=true
-    end
-  end
+  #Dir.glob(outdir+"/*").each do |fwd|
+  #  if fwd =~ /nugen_demultiplexing.log/
+  #    sample_sheet.lanes
+  #    statistics = Statistics.new(fwd)
+  #    stats_out = outdir + "/statistics"
+  #    stats_handler = File.new(stats_out,'w')
+  #    stats_handler.write(statistics.to_s)
+  #    stats_handler.close()
+  #  end
+  #  next unless fwd =~ /R1_[0-9]{3}./
+  #  cmd = "base_adder #{fwd} 4 #{fwd}_added"
+  #  if options[:debug]
+  #    STDERR.puts cmd if options[:debug]
+  #  else
+  #    status = system(cmd)
+  #    raise "Calling base_adder did not succeed!" if !status
+  #    cmd = "mv #{fwd}_added #{fwd}"
+  #    status = system(cmd)
+  #    raise "Was not able to rename file #{fwd}!" if status!=true
+  #  end
+  #end
 
 end
