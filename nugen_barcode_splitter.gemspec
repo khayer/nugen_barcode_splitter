@@ -5,7 +5,7 @@ $:.push File.expand_path("../lib", __FILE__)
 Gem::Specification.new do |s|
   s.name        = "nugen_barcode_splitter"
  # s.version     = NugenBarcodeSplitter::VERSION
-  s.version     = "0.0.9"
+  s.version     = "0.0.14"
   s.date        = "2012-02-15"
   s.authors     = ["Katharina Hayer"]
   s.email       = ["katharinaehayer@gmail.com"]

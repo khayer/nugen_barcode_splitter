@@ -1,3 +1,4 @@
+require 'csv'
 class Statistics
 
   def initialize(lane_log)

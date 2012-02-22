@@ -5,7 +5,7 @@ require "nugen_barcode_splitter"
 require "fileutils"
 
 usage =<<EOF
-      V E R S I O N - 0 . 0 . 8
+      V E R S I O N - 0 . 0 . 14 - BETA
       #{$0} [options] -p project_dir -o out_dir -c sample_sheet_nugen
 _____________________________________________________________________________
 
@@ -114,6 +114,7 @@ sample_sheet.create_barcode_txt("#{options[:out_dir]}/barcode")
 multx_opts = "#{options[:keep_barcode]} #{options[:eol_only]} #{options[:bol_only]} #{options[:mismatches]}"
 nugen_temp = NugenTemplate.new(options[:fastq_multx],multx_opts)
 
+
 Dir.glob(options[:project_dir]+"/*").each do |p|
   next unless File.directory? p
   next unless p =~ /Sample_Lane/
@@ -151,30 +152,39 @@ Dir.glob(options[:project_dir]+"/*").each do |p|
     end
     # Merging
     merger = Merger.new(fwd,rev,outdir,number,barcodes)
-    merger.merge()
+    stats = merger.merge()
+    stats_file = File.open("#{outdir}/nugen_demultiplexing.log", 'a')
+    stats_file.puts(stats)
+    stats_file.close()
   end
 
   # Add the trimmed bases
-  #Dir.glob(outdir+"/*").each do |fwd|
-  #  if fwd =~ /nugen_demultiplexing.log/
-  #    sample_sheet.lanes
-  #    statistics = Statistics.new(fwd)
-  #    stats_out = outdir + "/statistics"
-  #    stats_handler = File.new(stats_out,'w')
-  #    stats_handler.write(statistics.to_s)
-  #    stats_handler.close()
-  #  end
-  #  next unless fwd =~ /R1_[0-9]{3}./
-  #  cmd = "base_adder #{fwd} 4 #{fwd}_added"
-  #  if options[:debug]
-  #    STDERR.puts cmd if options[:debug]
-  #  else
-  #    status = system(cmd)
-  #    raise "Calling base_adder did not succeed!" if !status
-  #    cmd = "mv #{fwd}_added #{fwd}"
-  #    status = system(cmd)
-  #    raise "Was not able to rename file #{fwd}!" if status!=true
-  #  end
-  #end
+  Dir.glob(outdir+"/*").each do |f|
+    if f =~ /nugen_demultiplexing.log/
+      sample_sheet.lanes
+      statistics = Statistics.new(f)
+      stats_out = outdir + "/statistics"
+      stats_handler = File.new(stats_out,'w')
+      stats_handler.write(statistics.to_s)
+      stats_handler.close()
+    end
+    next unless f =~ /_updated/
+    name = f.split("/")[-1]
+    id = name.split(".")[1]
+    sample_dir = outdir + "/Sample_#{id}"
+    begin
+      FileUtils.mkdir_p sample_dir unless File.directory? sample_dir
+    rescue Exception => e
+      STDERR.puts e.message
+    end
+    name = name.gsub(/_updated/, "")
+    cmd = `mv #{f} #{sample_dir}/name`
+    if options[:debug]
+      STDERR.puts cmd if options[:debug]
+    else
+      status = system(cmd)
+      raise "Was not able to rename and move file #{f}!" if status!=true
+    end
+  end
 
 end

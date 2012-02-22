@@ -3,11 +3,17 @@ require "erubis"
 class NugenTemplate
 
   def initialize(fastq_multx, options)
+#    @template =<<EOF
+#gunzip -c <%= @read %> | #{fastq_multx} \\
+#  --bcfile <%= @barcodes %> #{options} <%= @options %> \\
+#  --prefix <%= @lane_dir %>/<%= @direction %> \\
+#  --suffix ".fq"
+#EOF
     @template =<<EOF
 #{fastq_multx} #{options}  <%= @barcodes %> \\
   <(gunzip -c <%= @read %>) \\
   -o <%= @lane_dir %>/<%= @direction %>.%.fq  \\
-  >> <%= @lane_dir %>/nugen_demultiplexing.log
+  >> <%= @lane_dir %>/nugen_demultiplexing_fastq_multx.log
 EOF
   end
 
@@ -23,7 +29,8 @@ EOF
       :lane_dir => lane_dir,
       :barcodes => barcodes,
       :read => read,
-      :direction => direction
+      :direction => direction,
+      #:options => options
     }
 
     eruby = Erubis::Eruby.new(@template)
