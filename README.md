@@ -25,7 +25,7 @@ C0ED3ACXX,6,S7,hg19,CCAT,RNA Seq,N,,,33333
 
 Note: The sample names must be alphanumerical!
 
-<code>
+
     -p, --project_dir                Illumina project directory (../Unaligned/ProjectXXX/)
     -o, --out_dir                    The desired output directory
     -s, --sample_sheet               Please provide your sample_sheet
@@ -37,7 +37,7 @@ Note: The sample names must be alphanumerical!
     -d, --debug                      Debug mode!
     -h, --help                       Show this message
 
-</code>
+
 
 The classes
 -----------
