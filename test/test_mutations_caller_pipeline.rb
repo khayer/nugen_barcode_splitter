@@ -11,7 +11,7 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     assert template.to_s.include?("fastq-multx")
     assert template.to_s.include?("<%= @read %>")
     temp = template.fill("Lane_3", "33", "~/Lane3/", "bc", "fwd", true)
-    assert_equal(temp.to_s, "fastq-multx   bc \\\n  <(gunzip -c fwd) \\\n  -o ~/Lane3//R1_33.%.fq  \\\n  >> ~/Lane3//nugen_demultiplexing.log\n")
+    assert_equal(temp.to_s, "gunzip -c fwd | fastq-multx \\\n  --bcfile bc  --bol \\\n  --prefix ~/Lane3//R1_33. \\\n  --suffix \".fq\"\n")
   end
 
   def test_fastq
@@ -54,12 +54,17 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
   end
 
   def test_merger
-    merger = Merger.new("test/fixtures/Sample_Lane5/k.gz",
-      "test/fixtures/Sample_Lane5/l.gz",
-      "test/fixtures/Sample_Lane5", "001", "test/fixtures/barcode_5.txt")
-    assert_equal(merger.sample_ids, ["RX3", "RX4", "RX3X2", "RX4X2"])
+    #merger = Merger.new("test/fixtures/Sample_Lane5/k.gz",
+    #  "test/fixtures/Sample_Lane5/l.gz",
+    #  "test/fixtures/Sample_Lane5", "001", "test/fixtures/barcode_5.txt")
+    #assert_equal(merger.sample_ids, ["RX3", "RX4", "RX3X2", "RX4X2"])
+    #stats = merger.merge()
+    #assert_equal("RX3\t18\nRX4\t7\nRX3X2\t16\nRX4X2\t8\nunmatched\t1\ntotal\t50\n",stats)
+    merger = Merger.new("test/fixtures/Sample_Lane8/Lane8_NoIndex_L008_R1_019.fastq.gz",
+      "test/fixtures/Sample_Lane8/Lane8_NoIndex_L008_R2_019.fastq.gz",
+      "test/fixtures/Sample_Lane8", "019", "test/fixtures/barcode_8.txt")
     stats = merger.merge()
-    assert_equal([28, 18, 26, 21, 7],stats)
     #assert.equal(merger.values_fwd[1].value_at(),{"sfggf"=>"dffg"})
+    assert_equal("RX9\t22464\nRX10\t28699\nRX9X2\t26434\nRX10X2\t22994\nunmatched\t15445\ntotal\t116036\n",stats)
   end
 end
