@@ -42,8 +42,8 @@ class Statistics
     @barcodes.each_with_index do |code, i|
       str += "#{code}:\t#{@num_reads[i]} \n"
     end
-    #percent = (100 / @total.to_f) * @num_unmatched.to_f
-    #percent = (percent.to_f * 100).round / 100.to_f
+    percent = (100 / @total.to_f) * @num_unmatched.to_f
+    percent = (percent.to_f * 100).round / 100.to_f
     str += "Unmatched:\t#{@num_unmatched}\n"
     str += "Total:\t#{@total}"
     str.to_s

@@ -40,9 +40,7 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
     samplesheet = SampleSheet.new("test/fixtures/sample_sheet.csv")
     assert_equal(samplesheet.barcodes[3], "TTAG")
     assert_equal(samplesheet.sample_id[4], "RX3")
-
     samplesheet.create_barcode_txt("test/fixtures/barcode")
-
   end
 
   def test_statistics
@@ -54,17 +52,11 @@ class NugenBarcodeSplitterTest < Test::Unit::TestCase
   end
 
   def test_merger
-    #merger = Merger.new("test/fixtures/Sample_Lane5/k.gz",
-    #  "test/fixtures/Sample_Lane5/l.gz",
-    #  "test/fixtures/Sample_Lane5", "001", "test/fixtures/barcode_5.txt")
-    #assert_equal(merger.sample_ids, ["RX3", "RX4", "RX3X2", "RX4X2"])
-    #stats = merger.merge()
-    #assert_equal("RX3\t18\nRX4\t7\nRX3X2\t16\nRX4X2\t8\nunmatched\t1\ntotal\t50\n",stats)
     merger = Merger.new("test/fixtures/Sample_Lane8/Lane8_NoIndex_L008_R1_019.fastq.gz",
       "test/fixtures/Sample_Lane8/Lane8_NoIndex_L008_R2_019.fastq.gz",
       "test/fixtures/Sample_Lane8", "019", "test/fixtures/barcode_8.txt")
+    assert_equal(["RX9", "RX10", "RX9X2", "RX10X2"], merger.sample_ids)
     stats = merger.merge()
-    #assert.equal(merger.values_fwd[1].value_at(),{"sfggf"=>"dffg"})
     assert_equal("RX9\t22464\nRX10\t28699\nRX9X2\t26434\nRX10X2\t22994\nunmatched\t15445\ntotal\t116036\n",stats)
   end
 end
