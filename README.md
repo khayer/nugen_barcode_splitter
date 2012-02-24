@@ -33,7 +33,9 @@ Note: The sample names must be alphanumerical!
     -b, --begin_of_line              Limit the search for the barcode to the start of the line DEFAULT:false
     -k, --keep_barcode               Do not trim of the barcode DEFAULT:false
     -m, --mismatches NUM             Number of mismatches (Default:1)
-    -x, --fastq_multx DIR
+    -n, --laneNumber NUM             Specific lane number (Default:all lanes)
+    -x DIR,
+        --fastx_barcode_splitter.pl
     -d, --debug                      Debug mode!
     -h, --help                       Show this message
 

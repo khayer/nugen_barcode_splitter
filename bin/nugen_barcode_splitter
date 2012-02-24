@@ -5,7 +5,7 @@ require "nugen_barcode_splitter"
 require "fileutils"
 
 usage =<<EOF
-      V E R S I O N - 0 . 0 . 18 - BETA
+      V E R S I O N - 1 . 0 . 0
       #{$0} [options] -p project_dir -o out_dir -c sample_sheet_nugen
 _____________________________________________________________________________
 
@@ -33,7 +33,7 @@ options = {
   :bel_only? => "",
   :mismatches => "",
   :keep_barcode => "",
-  :fastq_multx => "fastq_multx",
+  :fastx => "fastq_multx",
   :debug => false,
   :lane_number => ""
 }
@@ -79,8 +79,8 @@ optparse = OptionParser.new do |opts|
     options[:lane_number] = i if i
   end
 
-  opts.on("-x", "--fastq_multx DIR", String) do |i|
-    options[:fastq_multx] = i if i
+  opts.on("-x", "--fastx_barcode_splitter.pl DIR", String) do |i|
+    options[:fastx] = i if i
   end
 
   opts.on("-d", "--debug", "Debug mode!") do |i|
@@ -117,7 +117,7 @@ sample_sheet.create_barcode_txt("#{options[:out_dir]}/barcode")
 
 # Prepare template
 multx_opts = "#{options[:keep_barcode]} #{options[:eol_only]} #{options[:bol_only]} #{options[:mismatches]}"
-nugen_temp = NugenTemplate.new(options[:fastq_multx],multx_opts)
+nugen_temp = NugenTemplate.new(options[:fastx],multx_opts)
 
 Dir.glob(options[:project_dir]+"/*").each do |p|
   next unless File.directory? p
