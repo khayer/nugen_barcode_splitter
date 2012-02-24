@@ -14,14 +14,14 @@ Usage
 
 Example sample_sheet_nugen.csv :
 
-FCID,Lane,SampleID,SampleRef,Index,Description,Control,Recipe,Operator,SampleProject
-C0ED3ACXX,4,S1,hg19,ACCC,RNA Seq,N,,,33333
-C0ED3ACXX,4,S2,hg19,GAGT,RNA Seq,N,,,44444
-C0ED3ACXX,4,S3,hg19,CGTA,RNA Seq,N,,,33333
-C0ED3ACXX,4,S4,hg19,TTAG,RNA Seq,N,,,44444
-C0ED3ACXX,5,S5,hg19,AGGG,RNA Seq,N,,,33333
-C0ED3ACXX,5,S6,hg19,GTCA,RNA Seq,N,,,44444
-C0ED3ACXX,6,S7,hg19,CCAT,RNA Seq,N,,,33333
+    FCID,Lane,SampleID,SampleRef,Index,Description,Control,Recipe,Operator,SampleProject
+    C0ED3ACXX,4,S1,hg19,ACCC,RNA Seq,N,,,33333
+    C0ED3ACXX,4,S2,hg19,GAGT,RNA Seq,N,,,44444
+    C0ED3ACXX,4,S3,hg19,CGTA,RNA Seq,N,,,33333
+    C0ED3ACXX,4,S4,hg19,TTAG,RNA Seq,N,,,44444
+    C0ED3ACXX,5,S5,hg19,AGGG,RNA Seq,N,,,33333
+    C0ED3ACXX,5,S6,hg19,GTCA,RNA Seq,N,,,44444
+    C0ED3ACXX,6,S7,hg19,CCAT,RNA Seq,N,,,33333
 
 Note: The sample names must be alphanumerical!
 
